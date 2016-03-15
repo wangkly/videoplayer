@@ -243,6 +243,7 @@ public class VideoActivity extends Activity {
 
     private void changeToFullScreen(boolean isLeft) {
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        rlVideo.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
 //        RelativeLayout.LayoutParams layoutParams =
 //                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
 //        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
