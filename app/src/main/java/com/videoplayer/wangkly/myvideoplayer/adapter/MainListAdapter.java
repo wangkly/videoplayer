@@ -120,6 +120,7 @@ public class MainListAdapter extends SimpleAdapter {
                 holder.cb = (CheckBox) convertView.findViewById(R.id.checkBox);
                 holder.tv =(TextView) convertView.findViewById(R.id.tv);
                 holder.img =(ImageView)convertView.findViewById(R.id.img);
+                convertView.setTag(holder);
             }else{
                 holder = (ViewHolder) convertView.getTag();
             }
