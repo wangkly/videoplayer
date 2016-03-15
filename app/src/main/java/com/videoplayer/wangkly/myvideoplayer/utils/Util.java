@@ -1,14 +1,24 @@
-package com.videoplayer.wangkly.myvideoplayer.util;
+package com.videoplayer.wangkly.myvideoplayer.utils;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.DecimalFormat;
+
 public class Util{
 
     /**
-     * ¼ÆËã°Ù·Ö±È
+     * è®¡ç®—ç™¾åˆ†æ¯”
      * @param y
      * @param z
      * @return
      */
     public static String myPercent(int y, int z) {
-        String baifenbi = "";// ½ÓÊÜ°Ù·Ö±ÈµÄÖµ
+        String baifenbi = "";// æ¥å—ç™¾åˆ†æ¯”çš„å€¼
         double baiy = y * 1.0;
         double baiz = z * 1.0;
         double fen = baiy / baiz;
@@ -17,7 +27,7 @@ public class Util{
         return baifenbi;
     }
     /**
-     * ¼ÆËã°Ù·Ö±È
+     * è®¡ç®—ç™¾åˆ†æ¯”
      * @param y
      * @param z
      * @return
@@ -31,7 +41,7 @@ public class Util{
     }
 
     /**
-     * »ñÈ¡ÍøÂçÍ¼Æ¬×ÊÔ´
+     * è·å–ç½‘ç»œå›¾ç‰‡èµ„æº
      *
      * @param url
      * @return
@@ -41,21 +51,21 @@ public class Util{
         Bitmap bitmap = null;
         try {
             myFileURL = new URL(url);
-            // »ñµÃÁ¬½Ó
+            // è·å¾—è¿æ¥
             HttpURLConnection conn = (HttpURLConnection) myFileURL.openConnection();
-            // ÉèÖÃ³¬Ê±Ê±¼äÎª6000ºÁÃë£¬conn.setConnectionTiem(0);±íÊ¾Ã»ÓĞÊ±¼äÏŞÖÆ
+            // è®¾ç½®è¶…æ—¶æ—¶é—´ä¸º6000æ¯«ç§’ï¼Œconn.setConnectionTiem(0);è¡¨ç¤ºæ²¡æœ‰æ—¶é—´é™åˆ¶
             conn.setConnectTimeout(6000);
-            // Á¬½ÓÉèÖÃ»ñµÃÊı¾İÁ÷
+            // è¿æ¥è®¾ç½®è·å¾—æ•°æ®æµ
             conn.setDoInput(true);
-            // ²»Ê¹ÓÃ»º´æ
+            // ä¸ä½¿ç”¨ç¼“å­˜
             conn.setUseCaches(false);
-            // Õâ¾ä¿ÉÓĞ¿ÉÎŞ£¬Ã»ÓĞÓ°Ïì
+            // è¿™å¥å¯æœ‰å¯æ— ï¼Œæ²¡æœ‰å½±å“
             // conn.connect();
-            // µÃµ½Êı¾İÁ÷
+            // å¾—åˆ°æ•°æ®æµ
             InputStream is = conn.getInputStream();
-            // ½âÎöµÃµ½Í¼Æ¬
+            // è§£æå¾—åˆ°å›¾ç‰‡
             bitmap = BitmapFactory.decodeStream(is);
-            // ¹Ø±ÕÊı¾İÁ÷
+            // å…³é—­æ•°æ®æµ
             is.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,7 +75,7 @@ public class Util{
     }
 
     /**
-     * »ñÈ¡±¾µØÊÓÆµËõÂÊÍ¼
+     * è·å–æœ¬åœ°è§†é¢‘ç¼©ç‡å›¾
      * @param filePath
      * @param width
      * @param height
@@ -75,15 +85,14 @@ public class Util{
     public static Bitmap getVidioBitmap(String filePath, int width, int height,
                                         int kind) {
         Bitmap bitmap = null;
-        //ThumbnailUtils½ØÈ¡Í¼Æ¬£¨Ô­Ê¼±ÈÀı£©
+        //ThumbnailUtilsæˆªå–å›¾ç‰‡ï¼ˆåŸå§‹æ¯”ä¾‹ï¼‰
         //Create a video thumbnail for a video
         bitmap = ThumbnailUtils.createVideoThumbnail(filePath, kind);
-        //Œ¢Ô­Í¼Æ¬×ª»»ÎªÖ¸¶¨´óĞ¡£»
+        //å°‡åŸå›¾ç‰‡è½¬æ¢ä¸ºæŒ‡å®šå¤§å°ï¼›
         //Creates a centered bitmap of the desired size.
         bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
                 ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
-        //·Å»Øbitmap¶ÔÏó£»
+        //æ”¾å›bitmapå¯¹è±¡ï¼›
         return bitmap;
     }
-
 }

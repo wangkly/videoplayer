@@ -2,42 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:descendantFocusability="blocksDescendants"
+    android:minHeight="?android:attr/listPreferredItemHeight"
     android:layout_height="wrap_content">
 
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:layout_gravity="center_vertical"
+        android:focusableInTouchMode="false"
+        android:visibility="gone"
+        android:text="" />
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="fill_parent"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
-
-        <ImageView
+        <com.videoplayer.wangkly.myvideoplayer.widget.CircleImageView
             android:id="@+id/img"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent" />
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
     </LinearLayout>
-
-
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:layout_height="fill_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
+            android:layout_gravity="center_vertical"
             android:id="@+id/tv"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent" />
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-       <Button
-            android:id="@+id/btn"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent" />
     </LinearLayout>

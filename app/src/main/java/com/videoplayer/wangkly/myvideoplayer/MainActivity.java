@@ -4,14 +4,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -29,19 +30,22 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView mainlist;
 
+    private MainListAdapter adapter;
+    private ImageView trash;
+
+    private RelativeLayout rlayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
+        rlayout =(RelativeLayout)findViewById(R.id.relative);
+        trash = (ImageView) findViewById(R.id.trash);
         mainlist = (ListView) findViewById(R.id.mianlist);
-        MainListAdapter adapter = new MainListAdapter(MainActivity.this,getVideoList(),R.layout.activity_main,
+        trash.setOnClickListener(onClick());
+        adapter = new MainListAdapter(MainActivity.this,getVideoList(),R.layout.activity_main,
                 new String[]{"tv","img"},new int[]{R.id.tv,R.id.img});
-
         mainlist.setAdapter(adapter);
-
-
         mainlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -57,15 +61,59 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+    }
+
+    /**
+     * 按钮点击
+     * @return
+     */
+    public View.OnClickListener onClick(){
+        return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                switch (view.getId()) {
+//                    case R.id.download_back:
+//                        //结束activity,返回
+//                        finish();
+//                        break;
+                    case R.id.trash:
+                        beforeDelete();
+                        break;
+//                    case R.id.d_cancel:
+//                        cancelDelete();
+//                        break;
+//                    case R.id.d_delete:
+//                        deleteSelectedItem();
+//                        break;
+                    default:
+                        break;
+                }
             }
-        });
+        };
     }
+    /**
+     * 删除前处理
+     */
+    public void beforeDelete(){
+        //显示底部菜单
+        rlayout.setVisibility(View.VISIBLE);
+        //显示每一项前面的checkbox
+        HashMap<Integer,Integer> cv =  new HashMap<Integer, Integer>();
+        for(int i =0; i<adapter.getMlist().size();i++){
+            cv.put(i, CheckBox.VISIBLE);
+        }
+        adapter.setVisiblecheck(cv);
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -113,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 mediaColumns, null, null, null);
 
         if(cursor==null){
-            Toast.makeText(MainActivity.this, "没有找到可播放视频文件", 1).show();
+            Toast.makeText(MainActivity.this, "没有找到可播放视频文件", Toast.LENGTH_LONG).show();
             return null;
         }
         if (cursor.moveToFirst()) {

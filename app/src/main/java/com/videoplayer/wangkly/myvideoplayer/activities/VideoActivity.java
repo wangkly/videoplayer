@@ -2,6 +2,7 @@ package com.videoplayer.wangkly.myvideoplayer.activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.LinearLayout.LayoutParams;
 
 
 import com.videoplayer.wangkly.myvideoplayer.R;
@@ -41,19 +44,17 @@ public class VideoActivity extends Activity {
      * 当前音量
      */
     private int mVolume =-1;
-
     private float mBrightness = -1f;
 
-    private int mLayout = VideoView.VIDEO_LAYOUT_ZOOM;;
-
+    private int mLayout = VideoView.VIDEO_LAYOUT_SCALE;;
     private GestureDetector mGestureDetector;
-
     private MediaController mMediaController;
-
 
     private String videopath ="";
 
+    private ViewGroup.LayoutParams videoViewParams;
 
+    private RelativeLayout  rlVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,9 @@ public class VideoActivity extends Activity {
 
         mGestureDetector = new GestureDetector(this , new MyGestureListener());
 
+        rlVideo = (RelativeLayout) findViewById(R.id.rl_video);
+        videoViewParams = (ViewGroup.LayoutParams) rlVideo.getLayoutParams();
+       changeToFullScreen(true);
     }
 
 
@@ -117,12 +121,12 @@ public class VideoActivity extends Activity {
         /** 双击 */
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            if (mLayout == VideoView.VIDEO_LAYOUT_ZOOM)
-                mLayout = VideoView.VIDEO_LAYOUT_ORIGIN;
-            else
-                mLayout++;
-            if (mVideoView != null)
-                mVideoView.setVideoLayout(mLayout, 0);
+//            if (mLayout == VideoView.VIDEO_LAYOUT_ZOOM)
+//                mLayout = VideoView.VIDEO_LAYOUT_ORIGIN;
+//            else
+//                mLayout++;
+//            if (mVideoView != null)
+//                mVideoView.setVideoLayout(mLayout, 0);
             return true;
         }
 
@@ -217,9 +221,41 @@ public class VideoActivity extends Activity {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        if (mVideoView != null)
-            mVideoView.setVideoLayout(mLayout, 0);
         super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_STRETCH, 0);
+        } else {
+            mVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_STRETCH, 0);
+        }
      }
 
+
+    private void fullScreenToNormal() {
+//        isFullScreen = false;
+//        btnVideoFullScreen.setBackgroundResource(R.drawable.window_to_fullscreen_normal);
+//        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        videoViewParams.height = viewHeight;
+//        videoViewParams.width = LayoutParams.MATCH_PARENT;
+//        mVideoView.setLayoutParams(videoViewParams);
+//        mLayout = VideoView.VIDEO_LAYOUT_SCALE;
+//        mVideoView.setVideoLayout(mLayout, 0);
     }
+
+    private void changeToFullScreen(boolean isLeft) {
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        RelativeLayout.LayoutParams layoutParams =
+//                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
+//        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+//        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+//        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+//        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+//       rlVideo.setLayoutParams(layoutParams);
+        videoViewParams.height = LayoutParams.MATCH_PARENT;
+        videoViewParams.width = LayoutParams.MATCH_PARENT;
+        rlVideo.setLayoutParams(videoViewParams);
+//        mLayout = VideoView.VIDEO_LAYOUT_SCALE;
+//        mVideoView.setVideoLayout(mLayout, 0);
+    }
+
+
+}
