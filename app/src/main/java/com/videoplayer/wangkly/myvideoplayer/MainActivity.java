@@ -4,27 +4,29 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.videoplayer.wangkly.myvideoplayer.activities.OnlinePlayActivity;
 import com.videoplayer.wangkly.myvideoplayer.activities.VideoActivity;
 import com.videoplayer.wangkly.myvideoplayer.adapter.MainListAdapter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     private MainListAdapter adapter;
     private ImageView trash;
-
+    private Button cancel;
+    private Button delete;
     private RelativeLayout rlayout;
 
     @Override
@@ -41,8 +44,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         rlayout =(RelativeLayout)findViewById(R.id.relative);
         trash = (ImageView) findViewById(R.id.trash);
+        cancel = (Button) findViewById(R.id.cancel);
+        delete = (Button) findViewById(R.id.delete);
         mainlist = (ListView) findViewById(R.id.mianlist);
         trash.setOnClickListener(onClick());
+        cancel.setOnClickListener(onClick());
+        delete.setOnClickListener(onClick());
         adapter = new MainListAdapter(MainActivity.this,getVideoList(),R.layout.activity_main,
                 new String[]{"tv","img"},new int[]{R.id.tv,R.id.img});
         mainlist.setAdapter(adapter);
@@ -61,14 +68,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent();
+                intent.setClass(MainActivity.this,OnlinePlayActivity.class);
+                startActivity(intent);
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-//            }
-//        });
+            }
+        });
     }
 
     /**
@@ -87,12 +97,12 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.trash:
                         beforeDelete();
                         break;
-//                    case R.id.d_cancel:
-//                        cancelDelete();
-//                        break;
-//                    case R.id.d_delete:
-//                        deleteSelectedItem();
-//                        break;
+                    case R.id.cancel:
+                        cancelDelete();
+                        break;
+                    case R.id.delete:
+                        deleteSelectedItem();
+                        break;
                     default:
                         break;
                 }
@@ -113,6 +123,49 @@ public class MainActivity extends AppCompatActivity {
         adapter.setVisiblecheck(cv);
         adapter.notifyDataSetChanged();
     }
+
+
+    /**
+     * 取消删除操作
+     */
+    public void cancelDelete(){
+
+        rlayout.setVisibility(View.INVISIBLE);
+        HashMap<Integer,Integer> cv =  new HashMap<Integer, Integer>();
+        for(int i =0; i<adapter.getMlist().size();i++){
+            cv.put(i, CheckBox.INVISIBLE);
+        }
+        adapter.setVisiblecheck(cv);
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 删除
+     */
+    public  void deleteSelectedItem(){
+    Map<Integer,Boolean> map = adapter.getIsSelected();
+    List<Map<String,Object>> mlist =adapter.getMlist();
+    for(Object ob :map.keySet()){
+    if(map.get(ob)){
+            //删除对应位置的文件
+        Map<String,Object> bean= mlist.get((int)ob);
+            String filepath =bean.get("path").toString();
+            File file = new File(filepath);
+            if(file.exists()){
+                file.delete();//删除本地文件
+             }
+            mlist.remove(bean);//列表中删除
+            }
+        }
+
+        //通知adapter数据集变化
+        for (int i = 0; i < mlist.size(); i++) {
+            adapter.getIsSelected().put(i, false);
+            adapter.getVisiblecheck().put(i, CheckBox.INVISIBLE);
+        }
+        adapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

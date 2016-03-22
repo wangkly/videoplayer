@@ -21,6 +21,7 @@ import android.widget.LinearLayout.LayoutParams;
 
 import com.videoplayer.wangkly.myvideoplayer.R;
 
+import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.widget.MediaController;
 import io.vov.vitamio.widget.VideoView;
 
@@ -46,7 +47,7 @@ public class VideoActivity extends Activity {
     private int mVolume =-1;
     private float mBrightness = -1f;
 
-    private int mLayout = VideoView.VIDEO_LAYOUT_SCALE;;
+    private int mLayout = VideoView.VIDEO_LAYOUT_SCALE;
     private GestureDetector mGestureDetector;
     private MediaController mMediaController;
 
@@ -81,6 +82,7 @@ public class VideoActivity extends Activity {
         mVideoView.setMediaController(mMediaController);
 
         mVideoView.requestFocus();
+        mVideoView.setVideoQuality(MediaPlayer.VIDEOQUALITY_HIGH);
 
         mGestureDetector = new GestureDetector(this , new MyGestureListener());
 
