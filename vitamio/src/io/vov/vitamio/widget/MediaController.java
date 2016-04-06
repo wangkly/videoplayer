@@ -117,7 +117,7 @@ public class MediaController extends FrameLayout {
       }
     }
   };
-  private View.OnClickListener mPauseListener = new View.OnClickListener() {
+  private OnClickListener mPauseListener = new OnClickListener() {
     public void onClick(View v) {
       doPauseResume();
       show(sDefaultTimeout);

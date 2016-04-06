@@ -120,9 +120,14 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
             start();
             if (mMediaController != null)
               mMediaController.show();
+            if (mTitleController != null)
+              mTitleController.show();
           } else if (!isPlaying() && (seekToPosition != 0 || getCurrentPosition() > 0)) {
             if (mMediaController != null)
               mMediaController.show(0);
+
+            if (mTitleController != null)
+              mTitleController.show(0);
           }
         }
       } else if (mTargetState == STATE_PLAYING) {
@@ -145,6 +150,11 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
             mMediaController.hide();
           mMediaController.show();
         }
+        if (mTitleController != null) {
+          if (mTitleController.isShowing())
+            mTitleController.hide();
+          mTitleController.show();
+        }
       }
     }
 
@@ -161,6 +171,7 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
     public void surfaceDestroyed(SurfaceHolder holder) {
       mSurfaceHolder = null;
       if (mMediaController != null) mMediaController.hide();
+      if (mTitleController != null) mTitleController.hide();
       release(true);
     }
   };
@@ -180,6 +191,7 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
   private int mSurfaceWidth;
   private int mSurfaceHeight;
   private MediaController mMediaController;
+  private TitleController mTitleController;
   private View mMediaBufferingIndicator;
   private OnCompletionListener mOnCompletionListener;
   private OnPreparedListener mOnPreparedListener;
@@ -200,6 +212,8 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
       mTargetState = STATE_PLAYBACK_COMPLETED;
       if (mMediaController != null)
         mMediaController.hide();
+      if (mTitleController != null)
+        mTitleController.hide();
       if (mOnCompletionListener != null)
         mOnCompletionListener.onCompletion(mMediaPlayer);
     }
@@ -211,6 +225,9 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
       mTargetState = STATE_ERROR;
       if (mMediaController != null)
         mMediaController.hide();
+
+      if (mTitleController != null)
+        mTitleController.hide();
 
       if (mOnErrorListener != null) {
         if (mOnErrorListener.onError(mMediaPlayer, framework_err, impl_err))
@@ -447,6 +464,12 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
     mMediaController = controller;
     attachMediaController();
   }
+  public void setTitleController(TitleController controller) {
+    if (mTitleController != null)
+      mTitleController.hide();
+    mTitleController = controller;
+    attachTitleController();
+  }
 
   public void setMediaBufferingIndicator(View mediaBufferingIndicator) {
     if (mMediaBufferingIndicator != null)
@@ -466,6 +489,14 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
         String name = paths == null || paths.isEmpty() ? "null" : paths.get(paths.size() - 1);
         mMediaController.setFileName(name);
       }
+    }
+  }
+
+  private void attachTitleController() {
+    if (mMediaPlayer != null && mTitleController != null) {
+      View anchorView = this.getParent() instanceof View ? (View) this.getParent() : this;
+      mTitleController.setAnchorView(anchorView);
+      mTitleController.setEnabled(isInPlaybackState());
     }
   }
 
@@ -530,21 +561,25 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
         if (mMediaPlayer.isPlaying()) {
           pause();
           mMediaController.show();
+          mTitleController.show();
         } else {
           start();
           mMediaController.hide();
+          mTitleController.hide();
         }
         return true;
       } else if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY) {
         if (!mMediaPlayer.isPlaying()) {
             start();
             mMediaController.hide();
+            mTitleController.hide();
         }
         return true;
       } else if (keyCode == KeyEvent.KEYCODE_MEDIA_STOP || keyCode == KeyEvent.KEYCODE_MEDIA_PAUSE) {
         if (mMediaPlayer.isPlaying()) {
           pause();
           mMediaController.show();
+          mTitleController.show();
         }
         return true;
       } else {
@@ -561,6 +596,13 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
     } else {
       mMediaController.show();
     }
+
+    if (mTitleController.isShowing()) {
+      mTitleController.hide();
+    } else {
+      mTitleController.show();
+    }
+
   }
 
   public void start() {

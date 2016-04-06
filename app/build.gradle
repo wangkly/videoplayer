@@ -25,4 +25,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile project(':vitamio')
+    compile files('libs/nineoldandroids-2.4.0.jar')
 }

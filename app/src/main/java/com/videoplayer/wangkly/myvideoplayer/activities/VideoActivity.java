@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Display;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.videoplayer.wangkly.myvideoplayer.R;
 
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.widget.MediaController;
+import io.vov.vitamio.widget.TitleController;
 import io.vov.vitamio.widget.VideoView;
 
 /**
@@ -50,6 +52,8 @@ public class VideoActivity extends Activity {
     private int mLayout = VideoView.VIDEO_LAYOUT_SCALE;
     private GestureDetector mGestureDetector;
     private MediaController mMediaController;
+
+    private TitleController mTitleController;
 
     private String videopath ="";
 
@@ -79,7 +83,10 @@ public class VideoActivity extends Activity {
 
         mMediaController = new MediaController(this);
 
+        mTitleController =new TitleController(this);
+
         mVideoView.setMediaController(mMediaController);
+        mVideoView.setTitleController(mTitleController);
 
         mVideoView.requestFocus();
         mVideoView.setVideoQuality(MediaPlayer.VIDEOQUALITY_HIGH);
@@ -261,4 +268,12 @@ public class VideoActivity extends Activity {
     }
 
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

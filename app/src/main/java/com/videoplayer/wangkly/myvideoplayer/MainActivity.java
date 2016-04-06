@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_horizental_scroll);
         rlayout =(RelativeLayout)findViewById(R.id.relative);
         trash = (ImageView) findViewById(R.id.trash);
         cancel = (Button) findViewById(R.id.cancel);
