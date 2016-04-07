@@ -119,6 +119,19 @@ public class TitleController extends FrameLayout {
       initFloatingWindow();
   }
 
+  public TitleController(Context context, boolean fromXml, View container) {
+		super(context);
+		fontFace = Typeface.createFromAsset(context.getAssets(), "xmedu_cg.ttf");
+		initController(context);
+		mFromXml = fromXml;
+		mRoot = makeControllerView();
+		FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);// 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷MediaController锟酵撅拷锟斤拷姆锟斤拷锟斤拷锟斤拷LayoutParams锟斤拷
+		p.gravity = Gravity.TOP;
+		mRoot.setLayoutParams(p);
+		((FrameLayout) container).addView(mRoot);
+		initControllerView(mRoot);
+	}
+  
   private boolean initController(Context context) {
     mContext = context;
     return true;
