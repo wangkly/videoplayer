@@ -180,7 +180,6 @@ public class MediaController extends FrameLayout {
   
   public MediaController(Context context, boolean fromXml, View container) {
 		super(context);
-		fontFace = Typeface.createFromAsset(context.getAssets(), "xmedu_cg.ttf");
 		initController(context);
 		mFromXml = fromXml;
 		mRoot = makeControllerView();

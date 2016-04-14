@@ -59,10 +59,11 @@ public class MainActivity extends AppCompatActivity {
                 ListView listView = (ListView) parent;
                 HashMap<String, Object> data = (HashMap<String, Object>) listView.getItemAtPosition(position);
                 String path = (String) data.get("path");
+                String title = (String) data.get("title");
                 Intent intent =new Intent(MainActivity.this, VideoActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("videopath", path);
-
+                bundle.putString("title", title);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -42,6 +43,8 @@ public class VideoActivity extends Activity {
 
     private AudioManager mAudioManager;
 
+    private FrameLayout ll;
+
     private int mMaxVolume;
     /**
      * 当前音量
@@ -57,6 +60,8 @@ public class VideoActivity extends Activity {
 
     private String videopath ="";
 
+    private String videotitle;
+
     private ViewGroup.LayoutParams videoViewParams;
 
     private RelativeLayout  rlVideo;
@@ -69,9 +74,12 @@ public class VideoActivity extends Activity {
         Bundle bundle = this.getIntent().getExtras();
 
         videopath =bundle.getString("videopath");
+
+        videotitle =bundle.getString("title");
+
         if (!io.vov.vitamio.LibsChecker.checkVitamioLibs(this))
             return;
-
+        ll= (FrameLayout) findViewById(R.id.ll_layout);
         mVideoView = (VideoView) findViewById(R.id.surface_view);
         mVolumeBrightnessLayout = findViewById(R.id.operation_volume_brightness);
         mOperationBg = (ImageView) findViewById(R.id.operation_bg);
@@ -81,15 +89,20 @@ public class VideoActivity extends Activity {
 
         mVideoView.setVideoPath(videopath);
 
-        mMediaController = new MediaController(this);
+        mMediaController = new MediaController(this,true,ll);
 
-        mTitleController =new TitleController(this);
+        mTitleController =new TitleController(this,true,ll);
 
         mVideoView.setMediaController(mMediaController);
         mVideoView.setTitleController(mTitleController);
 
+    //    mTitleController.setFileName(videotitle);
+
+
         mVideoView.requestFocus();
         mVideoView.setVideoQuality(MediaPlayer.VIDEOQUALITY_HIGH);
+        //不使用硬解码
+        mVideoView.setHardwareDecoder(false);
 
         mGestureDetector = new GestureDetector(this , new MyGestureListener());
 

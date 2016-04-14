@@ -38,30 +38,23 @@ public final class R {
         public static final int scrubber_track_holo_dark=0x7f02000d;
         public static final int video_download_rate=0x7f02000e;
         public static final int video_more=0x7f02000f;
-        public static final int video_num_bg=0x7f020010;
-        public static final int video_num_front=0x7f020011;
-        public static final int video_volumn_bg=0x7f020012;
     }
     public static final class id {
-        public static final int battery_level=0x7f09000c;
-        public static final int date_time=0x7f09000b;
-        public static final int info_panel=0x7f090009;
-        public static final int mediacontroller_file_name=0x7f090008;
-        public static final int mediacontroller_lock=0x7f09000a;
-        public static final int mediacontroller_play_pause=0x7f090004;
-        public static final int mediacontroller_seekbar=0x7f090007;
-        public static final int mediacontroller_time_current=0x7f090005;
-        public static final int mediacontroller_time_total=0x7f090006;
-        public static final int operation_bg=0x7f090001;
-        public static final int operation_full=0x7f090002;
-        public static final int operation_percent=0x7f090003;
-        public static final int operation_volume_brightness=0x7f090000;
-        public static final int video_menu=0x7f09000d;
+        public static final int battery_level=0x7f090009;
+        public static final int date_time=0x7f090008;
+        public static final int file_name=0x7f090007;
+        public static final int info_panel=0x7f090005;
+        public static final int mediacontroller_file_name=0x7f090004;
+        public static final int mediacontroller_lock=0x7f090006;
+        public static final int mediacontroller_play_pause=0x7f090000;
+        public static final int mediacontroller_seekbar=0x7f090003;
+        public static final int mediacontroller_time_current=0x7f090001;
+        public static final int mediacontroller_time_total=0x7f090002;
+        public static final int video_menu=0x7f09000a;
     }
     public static final class layout {
-        public static final int brightness_volumn=0x7f030000;
-        public static final int mediacontroller=0x7f030001;
-        public static final int titlecontroller=0x7f030002;
+        public static final int mediacontroller=0x7f030000;
+        public static final int titlecontroller=0x7f030001;
     }
     public static final class raw {
         public static final int libarm=0x7f040000;

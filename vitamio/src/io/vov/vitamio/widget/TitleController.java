@@ -96,6 +96,8 @@ public class TitleController extends FrameLayout {
         case FADE_OUT:
           hide();
           break;
+        default:
+          break;
       }
     }
   };
@@ -121,7 +123,6 @@ public class TitleController extends FrameLayout {
 
   public TitleController(Context context, boolean fromXml, View container) {
 		super(context);
-		fontFace = Typeface.createFromAsset(context.getAssets(), "xmedu_cg.ttf");
 		initController(context);
 		mFromXml = fromXml;
 		mRoot = makeControllerView();
@@ -197,7 +198,7 @@ public class TitleController extends FrameLayout {
     if (mLockButton != null) {
       mLockButton.setOnClickListener(mLockListener);
     }
-    mFileName = (TextView) v.findViewById(getResources().getIdentifier("mediacontroller_file_name", "id", mContext.getPackageName()));
+    mFileName = (TextView) v.findViewById(getResources().getIdentifier("file_name", "id", mContext.getPackageName()));
     if (mFileName != null)
       mFileName.setText(mTitle);
   }

@@ -38,30 +38,23 @@ public final class R {
         public static int scrubber_track_holo_dark=0x7f02000d;
         public static int video_download_rate=0x7f02000e;
         public static int video_more=0x7f02000f;
-        public static int video_num_bg=0x7f020010;
-        public static int video_num_front=0x7f020011;
-        public static int video_volumn_bg=0x7f020012;
     }
     public static final class id {
-        public static int battery_level=0x7f09000c;
-        public static int date_time=0x7f09000b;
-        public static int info_panel=0x7f090009;
-        public static int mediacontroller_file_name=0x7f090008;
-        public static int mediacontroller_lock=0x7f09000a;
-        public static int mediacontroller_play_pause=0x7f090004;
-        public static int mediacontroller_seekbar=0x7f090007;
-        public static int mediacontroller_time_current=0x7f090005;
-        public static int mediacontroller_time_total=0x7f090006;
-        public static int operation_bg=0x7f090001;
-        public static int operation_full=0x7f090002;
-        public static int operation_percent=0x7f090003;
-        public static int operation_volume_brightness=0x7f090000;
-        public static int video_menu=0x7f09000d;
+        public static int battery_level=0x7f090009;
+        public static int date_time=0x7f090008;
+        public static int file_name=0x7f090007;
+        public static int info_panel=0x7f090005;
+        public static int mediacontroller_file_name=0x7f090004;
+        public static int mediacontroller_lock=0x7f090006;
+        public static int mediacontroller_play_pause=0x7f090000;
+        public static int mediacontroller_seekbar=0x7f090003;
+        public static int mediacontroller_time_current=0x7f090001;
+        public static int mediacontroller_time_total=0x7f090002;
+        public static int video_menu=0x7f09000a;
     }
     public static final class layout {
-        public static int brightness_volumn=0x7f030000;
-        public static int mediacontroller=0x7f030001;
-        public static int titlecontroller=0x7f030002;
+        public static int mediacontroller=0x7f030000;
+        public static int titlecontroller=0x7f030001;
     }
     public static final class raw {
         public static int libarm=0x7f040000;
