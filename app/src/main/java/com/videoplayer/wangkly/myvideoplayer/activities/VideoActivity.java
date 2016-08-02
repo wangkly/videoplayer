@@ -285,6 +285,11 @@ public class VideoActivity extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if(keyCode == KeyEvent.KEYCODE_BACK){
+           if(mVideoView.isPlaying()){
+
+               mVideoView.suspend();
+
+           }
             finish();
         }
         return super.onKeyDown(keyCode, event);

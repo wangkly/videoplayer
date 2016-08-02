@@ -1,8 +1,0 @@
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:drawable="@color/mediacontroller_bg_pressed" android:state_focused="true"/>
-    <item android:drawable="@color/mediacontroller_bg_pressed" android:state_pressed="true"/>
-    <item android:drawable="@color/transparent" android:state_enabled="false"/>
-    <item android:drawable="@color/transparent"/>
-
-</selector><!-- From: file:/D:/AndroidStudioProjects/MyVideoPlayer/vitamio/res/drawable/mediacontroller_btn_bg.xml --><!-- From: file:/D:/AndroidStudioProjects/MyVideoPlayer/vitamio/build/intermediates/bundles/debug/res/drawable/mediacontroller_btn_bg.xml -->
