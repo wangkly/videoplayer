@@ -177,13 +177,13 @@ public class MediaController extends FrameLayout {
     if (!mFromXml && initController(context))
       initFloatingWindow();
   }
-  
+
   public MediaController(Context context, boolean fromXml, View container) {
 		super(context);
 		initController(context);
 		mFromXml = fromXml;
 		mRoot = makeControllerView();
-		
+
 		FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 		p.gravity = Gravity.BOTTOM;
 		mRoot.setLayoutParams(p);

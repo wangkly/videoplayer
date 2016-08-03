@@ -56,7 +56,7 @@ public class VideoActivity extends Activity {
     private GestureDetector mGestureDetector;
     private MediaController mMediaController;
 
-    private TitleController mTitleController;
+//    private TitleController mTitleController;
 
     private String videopath ="";
 
@@ -91,10 +91,10 @@ public class VideoActivity extends Activity {
 
         mMediaController = new MediaController(this,true,ll);
 
-        mTitleController =new TitleController(this,true,ll);
+//        mTitleController =new TitleController(this,true,ll);
 
         mVideoView.setMediaController(mMediaController);
-        mVideoView.setTitleController(mTitleController);
+//        mVideoView.setTitleController(mTitleController);
 
     //    mTitleController.setFileName(videotitle);
 
@@ -206,8 +206,9 @@ public class VideoActivity extends Activity {
 
         // 变更进度条
         ViewGroup.LayoutParams lp = mOperationPercent.getLayoutParams();
-        lp.width = findViewById(R.id.operation_full).getLayoutParams().width
+        lp.width = (findViewById(R.id.operation_full).getLayoutParams().width)
                 * index / mMaxVolume;
+        lp.width -=15;
         mOperationPercent.setLayoutParams(lp);
     }
 
@@ -237,7 +238,9 @@ public class VideoActivity extends Activity {
         getWindow().setAttributes(lpa);
 
         ViewGroup.LayoutParams lp = mOperationPercent.getLayoutParams();
-        lp.width = (int) (findViewById(R.id.operation_full).getLayoutParams().width * lpa.screenBrightness);
+        lp.width = (int) ((findViewById(R.id.operation_full).getLayoutParams().width) * lpa.screenBrightness);
+
+        lp.width -=15;
         mOperationPercent.setLayoutParams(lp);
     }
 
