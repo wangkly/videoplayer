@@ -1,15 +1,19 @@
 package com.videoplayer.wangkly.myvideoplayer;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -38,10 +42,26 @@ public class MainActivity extends AppCompatActivity {
     private Button delete;
     private RelativeLayout rlayout;
 
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_horizental_scroll);
+
+        int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    1);
+            return;
+        }
+
+
+    }
+
+
+
+    public void remainOptions(){
+
         rlayout =(RelativeLayout)findViewById(R.id.relative);
         trash = (ImageView) findViewById(R.id.trash);
         cancel = (Button) findViewById(R.id.cancel);
@@ -50,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         trash.setOnClickListener(onClick());
         cancel.setOnClickListener(onClick());
         delete.setOnClickListener(onClick());
+
+
         adapter = new MainListAdapter(MainActivity.this,getVideoList(),R.layout.activity_main,
                 new String[]{"tv","img"},new int[]{R.id.tv,R.id.img});
         mainlist.setAdapter(adapter);
@@ -80,7 +102,11 @@ public class MainActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
             }
         });
+
     }
+
+
+
 
     /**
      * 按钮点击
@@ -249,4 +275,29 @@ public class MainActivity extends AppCompatActivity {
         return sysVideoList;
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode){
+
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                 this.remainOptions();
+
+                } else {
+                    finish();
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+        }
+
+
+    }
 }
